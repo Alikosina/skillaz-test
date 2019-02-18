@@ -1,3 +1,3 @@
 export interface LinkListItemProps {
-  link: string;
+  link: { link: string; linkCount: number };
 }
