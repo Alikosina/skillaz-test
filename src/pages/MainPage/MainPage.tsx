@@ -1,12 +1,8 @@
 import * as React from "react";
+import { FormContainer } from "@app/containers/Form/FormContainer";
 
 export class MainPage extends React.Component {
   render() {
-    return (
-      <div>
-        <label htmlFor="link-input">Введите ссылку:</label>
-        <input id="link-input" type="text" placeholder="ссылка" />
-      </div>
-    );
+    return <FormContainer />;
   }
 }
