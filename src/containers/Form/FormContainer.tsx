@@ -2,6 +2,7 @@ import * as React from "react";
 import { FormContainerProps, FormContainerState } from "./models";
 import { connect } from "react-redux";
 import { SET_LINK, INCREASE_COUNT } from "@app/modules/app/appActions";
+import { isUrl } from "@app/utils/helpers";
 
 class FormContainer extends React.Component<
   FormContainerProps,
@@ -18,11 +19,6 @@ class FormContainer extends React.Component<
     });
   };
 
-  isUrl = (s: string) => {
-    var regexp = /(ftp|http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/;
-    return regexp.test(s);
-  };
-
   handleLinkClick = e => {
     e.preventDefault();
     const { href } = e.currentTarget;
@@ -37,7 +33,7 @@ class FormContainer extends React.Component<
 
   render() {
     const { link } = this.state;
-    const isUrl = this.isUrl(link);
+    const isValidUrl = isUrl(link);
     return (
       <div>
         <label htmlFor="link-input">Введите ссылку: </label>
@@ -50,7 +46,7 @@ class FormContainer extends React.Component<
         />
         <div>
           Сокращенная ссылка -{" "}
-          {isUrl && (
+          {isValidUrl && (
             <a onClick={this.handleLinkClick} target="blank" href={link}>
               {new URL(link).host}
             </a>
