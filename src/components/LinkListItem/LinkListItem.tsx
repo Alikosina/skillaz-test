@@ -3,13 +3,15 @@ import { LinkListItemProps } from "./models";
 
 export default class LinkListItem extends React.Component<LinkListItemProps> {
   render() {
-    const { link, linkCount } = this.props.link;
+    const { link, onDeleteClick } = this.props;
     return (
       <div className="link-list-item">
         <div className="link-list-item__text">
-          {link} - {linkCount}
+          {link.link} - {link.linkCount}
         </div>
-        <div className="link-list-item__delete-button">Удалить</div>
+        <div onClick={onDeleteClick} className="link-list-item__delete-button">
+          Удалить
+        </div>
       </div>
     );
   }
