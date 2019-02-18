@@ -1,7 +1,9 @@
 import * as React from "react";
 import { FormContainerProps, FormContainerState } from "./models";
+import { connect } from "react-redux";
+import { SET_LINK, INCREASE_COUNT } from "@app/modules/app/appActions";
 
-export class FormContainer extends React.Component<
+class FormContainer extends React.Component<
   FormContainerProps,
   FormContainerState
 > {
@@ -23,8 +25,14 @@ export class FormContainer extends React.Component<
 
   handleLinkClick = e => {
     e.preventDefault();
-    const { currentTarget } = e;
-    window.open(currentTarget.href);
+    const { href } = e.currentTarget;
+    const { setLink, increaseCount, links } = this.props;
+    if (!links[href]) {
+      setLink(href);
+    } else {
+      increaseCount(href);
+    }
+    window.open(href);
   };
 
   render() {
@@ -52,3 +60,27 @@ export class FormContainer extends React.Component<
     );
   }
 }
+
+const mapStateToProps = state => ({
+  links: state.app
+});
+
+const mapDispatchToProps = dispatch => ({
+  setLink: link => {
+    dispatch({
+      type: SET_LINK,
+      payload: link
+    });
+  },
+  increaseCount: link => {
+    dispatch({
+      type: INCREASE_COUNT,
+      payload: link
+    });
+  }
+});
+
+export const Form = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormContainer);
